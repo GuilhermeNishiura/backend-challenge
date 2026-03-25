@@ -1,0 +1,113 @@
+{
+  "info": {
+    "name": "Backend Challenge - Microsservicos",
+    "description": "Collection para testar payment, consumer e query services",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Payment Service",
+      "item": [
+        {
+          "name": "Criar pagamento",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8081/api/payments",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "payments"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"contaOrigem\": \"123\",\n  \"contaDestino\": \"456\",\n  \"valor\": 100,\n  \"descricao\": \"Teste pagamento\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Statement Consumer Service",
+      "item": [
+        {
+          "name": "Consumir evento (Mock Kafka)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8082/internal/test/consume",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "internal",
+                "test",
+                "consume"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"paymentId\": \"82e5fec3-e51b-43e5-b140-5ed2fddb9cd2\",\n  \"from\": \"123\",\n  \"to\": \"456\",\n  \"amount\": 100,\n  \"description\": \"Teste pagamento\",\n  \"status\": \"COMPLETED\",\n  \"completedAt\": \"2026-03-24T19:05:32.123Z\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Statement Query Service",
+      "item": [
+        {
+          "name": "Listar extratos por conta",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8083/api/statements?accountId=123&page=0&size=10",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8083",
+              "path": [
+                "api",
+                "statements"
+              ],
+              "query": [
+                {
+                  "key": "accountId",
+                  "value": "123"
+                },
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+package com.backend.consumer.dto;
+
+public class PaymentCompletedEvent {
+
+    private String paymentId;
+    private String from;
+    private String to;
+    private Double amount;
+    private String description;
+    private String status;
+    private String completedAt;
+
+    public PaymentCompletedEvent(String paymentId, String from, String to, Double amount, String description, String status, String completedAt) {
+        this.paymentId = paymentId;
+        this.from = from;
+        this.to = to;
+        this.amount = amount;
+        this.description = description;
+        this.status = status;
+        this.completedAt = completedAt;
+    }
+
+    public String getPaymentId() { return paymentId; }
+    public void setPaymentId(String paymentId) { this.paymentId = paymentId; }
+
+    public String getFrom() { return from; }
+    public void setFrom(String from) { this.from = from; }
+
+    public String getTo() { return to; }
+    public void setTo(String to) { this.to = to; }
+
+    public Double getAmount() { return amount; }
+    public void setAmount(Double amount) { this.amount = amount; }
+
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+
+    public String getCompletedAt() { return completedAt; }
+    public void setCompletedAt(String completedAt) { this.completedAt = completedAt; }
+}
