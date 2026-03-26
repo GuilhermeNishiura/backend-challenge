@@ -28,11 +28,6 @@ public class PaymentService {
     }
 
     public PaymentResponse realizarPagamento(PaymentRequest req) {
-
-        //if (req == null || req.getContaOrigem() == null || req.getContaDestino() == null) {
-        //    throw new IllegalArgumentException("Payload inválido");
-        //}
-
         Account origem = accountRepo.findById(req.getContaOrigem())
                 .orElseThrow(() -> new BusinessException("Conta de origem não encontrada"));
 

@@ -9,7 +9,6 @@ public class Statement {
     @Id
     private String id;
 
-    private String paymentId;
     private String from;
     private String to;
     private Double amount;
@@ -20,7 +19,7 @@ public class Statement {
     public Statement(){}
 
     public Statement(String paymentId, String from, String to, Double amount, String description, String status, String completedAt){
-        this.paymentId = paymentId;
+        this.id = paymentId;
         this.from = from;
         this.to = to;
         this.amount = amount;
@@ -32,8 +31,8 @@ public class Statement {
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
-    public String getPaymentId() { return paymentId; }
-    public void setPaymentId(String paymentId) { this.paymentId = paymentId; }
+    public String getPaymentId() { return id; }
+    public void setPaymentId(String paymentId) { this.id = paymentId; }
 
     public String getFrom() { return from; }
     public void setFrom(String from) { this.from = from; }

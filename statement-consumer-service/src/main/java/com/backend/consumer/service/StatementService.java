@@ -1,13 +1,13 @@
 package com.backend.consumer.service;
 
+import org.springframework.stereotype.Service;
+
 import com.backend.consumer.dto.PaymentCompletedEvent;
 import com.backend.consumer.model.Statement;
 import com.backend.consumer.repository.StatementRepository;
-import org.springframework.stereotype.Service;
 
 @Service
-public class StatementService {
-
+public class StatementService {    
     private final StatementRepository repository;
 
     private boolean featureEnabled = true;
@@ -20,15 +20,16 @@ public class StatementService {
         this.featureEnabled = enabled;
     }
 
-    public Statement saveStatement(PaymentCompletedEvent event) {
+    public ConsumeResult saveStatement(PaymentCompletedEvent event) {
 
         if (!featureEnabled) {
-            return null;
+            return ConsumeResult.FEATURE_DISABLED;
         }
 
-        if (repository.findById(event.getPaymentId()).isPresent()) {
-            return null;
-        }
+        if (repository.existsById(event.getPaymentId())) {
+            return ConsumeResult.DUPLICATE;
+        }   
+
 
         Statement s = new Statement(
             event.getPaymentId(),
@@ -40,6 +41,7 @@ public class StatementService {
             event.getCompletedAt()
         );
 
-        return repository.save(s);
+        repository.save(s);
+        return ConsumeResult.PROCESSED;
     }
 }

@@ -1,17 +1,20 @@
 package com.backend.payment.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 public class PaymentRequest {
 
-    @NotNull
+    @NotBlank(message = "Conta de origem é obrigatória")
     private String contaOrigem;
 
-    @NotNull
+    @NotBlank(message = "Conta de destino é obrigatória")
     private String contaDestino;
 
-    @Positive
+    
+    @NotNull(message = "Valor é obrigatório")
+    @Positive(message = "Valor deve ser maior que zero")
     private Double valor;
 
     private String descricao;

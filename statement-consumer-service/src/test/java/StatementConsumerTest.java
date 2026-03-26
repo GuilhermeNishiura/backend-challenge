@@ -1,15 +1,14 @@
 
-import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -17,6 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.backend.consumer.dto.PaymentCompletedEvent;
 import com.backend.consumer.model.Statement;
 import com.backend.consumer.repository.StatementRepository;
+import com.backend.consumer.service.ConsumeResult;
 import com.backend.consumer.service.StatementService;
 
 @ExtendWith(MockitoExtension.class)
@@ -45,15 +45,19 @@ class StatementConsumerTest {
 
     // 1) Deve salvar extrato ao consumir evento válido
     @Test
-    void shouldSaveStatementWhenEventIsValid() {
+    void shouldSaveStatementWhenEventIsValid() {  
+    
+        when(repository.existsById("abc-123")).thenReturn(false);
 
-        when(repository.findById("abc-123")).thenReturn(Optional.empty());
-        when(repository.save(any())).thenAnswer(i -> i.getArgument(0));
+        service.saveStatement(event);
 
-        Statement result = service.saveStatement(event);
+        ArgumentCaptor<Statement> captor = ArgumentCaptor.forClass(Statement.class);
 
-        assertThat(result.getPaymentId()).isEqualTo("abc-123");
-        verify(repository, times(1)).save(any(Statement.class));
+        verify(repository).save(captor.capture());
+
+        Statement saved = captor.getValue();
+        assertThat(saved.getPaymentId()).isEqualTo("abc-123");
+
     }
 
     // 2) Não deve salvar quando feature toggle estiver OFF
@@ -61,8 +65,9 @@ class StatementConsumerTest {
     void shouldNotSaveWhenFeatureIsDisabled() {
 
         service.setFeatureEnabled(false);
-
-        service.saveStatement(event);
+        
+        ConsumeResult result = service.saveStatement(event);
+        assertThat(result).isEqualTo(ConsumeResult.FEATURE_DISABLED);
 
         verify(repository, never()).save(any());
     }
@@ -71,11 +76,11 @@ class StatementConsumerTest {
     @Test
     void shouldIgnoreDuplicateEvent() {
 
-        when(repository.findById("abc-123"))
-                .thenReturn(Optional.of(new Statement()));
+        when(repository.existsById(anyString())).thenReturn(true);
 
-        service.saveStatement(event);
+        ConsumeResult result = service.saveStatement(event);
 
+        assertThat(result).isEqualTo(ConsumeResult.DUPLICATE);
         verify(repository, never()).save(any());
     }
 }
