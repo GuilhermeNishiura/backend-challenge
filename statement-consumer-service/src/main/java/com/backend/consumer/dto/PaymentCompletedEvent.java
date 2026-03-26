@@ -10,6 +10,8 @@ public class PaymentCompletedEvent {
     private String status;
     private String completedAt;
 
+    public PaymentCompletedEvent() {}
+
     public PaymentCompletedEvent(String paymentId, String from, String to, Double amount, String description, String status, String completedAt) {
         this.paymentId = paymentId;
         this.from = from;

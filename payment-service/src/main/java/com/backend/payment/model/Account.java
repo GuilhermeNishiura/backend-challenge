@@ -13,16 +13,16 @@ public class Account {
 
     private Double saldo;
 
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
-
-    public Double getSaldo() { return saldo; }
-    public void setSaldo(Double saldo) { this.saldo = saldo; }
-
-    
+    public Account() {}
+        
     public Account(String id, double saldo) {
         this.id = id;
         this.saldo = saldo;
     }
 
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
+
+    public Double getSaldo() { return saldo; }
+    public void setSaldo(Double saldo) { this.saldo = saldo; }
 }

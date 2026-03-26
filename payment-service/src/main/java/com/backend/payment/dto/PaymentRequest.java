@@ -16,6 +16,15 @@ public class PaymentRequest {
 
     private String descricao;
 
+    public PaymentRequest() {}
+        
+    public PaymentRequest(String origem, String destino, double valor, String desc) {
+        this.contaOrigem = origem;
+        this.contaDestino = destino;
+        this.valor = valor;
+        this.descricao = desc;
+    }
+
     public String getContaOrigem() { return contaOrigem; }
     public void setContaOrigem(String contaOrigem) { this.contaOrigem = contaOrigem; }
 
@@ -27,13 +36,5 @@ public class PaymentRequest {
 
     public String getDescricao() { return descricao; }
     public void setDescricao(String descricao) { this.descricao = descricao; }
-
-    
-    public PaymentRequest(String origem, String destino, double valor, String desc) {
-        this.contaOrigem = origem;
-        this.contaDestino = destino;
-        this.valor = valor;
-        this.descricao = desc;
-    }
 
 }
