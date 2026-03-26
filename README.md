@@ -1,5 +1,3 @@
-# Backend Challenge – Microsserviços de Pagamento e Extrato
-
 <div style="border:1px solid #ccc; padding:20px; background:#fafafa;">
 
 <h1>Backend Challenge – Microsserviços de Pagamento e Extrato</h1>
@@ -114,21 +112,6 @@ mvn test
 
 ---
 
-<h2>7. Critérios de Aceite</h2>
-
-<table border="1" cellpadding="8" cellspacing="0">
-<tr><td>Pagamento com saldo suficiente publica evento</td><td>Atendido</td></tr>
-<tr><td>Consumer grava extrato no MongoDB</td><td>Atendido</td></tr>
-<tr><td>Consulta de extrato funciona corretamente</td><td>Atendido</td></tr>
-<tr><td>Feature toggle desativa consumer</td><td>Atendido</td></tr>
-<tr><td>Endpoints protegidos por JWT</td><td>Atendido</td></tr>
-<tr><td>Validações padronizadas</td><td>Atendido</td></tr>
-<tr><td>Swagger disponível</td><td>Atendido</td></tr>
-<tr><td>Testes unitários passando</td><td>Atendido</td></tr>
-</table>
-
----
-
 <h2>8. Estrutura do Repositório</h2>
 
 ```
@@ -138,11 +121,3 @@ backend-challenge/
 ├── statement-query-service/
 └── postman/
 ```
-
----
-
-<h2>9. Conclusão</h2>
-
-<p>
-O projeto atende integralmente os requisitos do desafio, entregando uma solução robusta, testada e pronta para evolução.
-</p>
