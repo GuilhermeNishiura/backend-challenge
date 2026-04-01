@@ -14,11 +14,11 @@ public class StatementQueryService {
     }
 
     public StatementPage getStatements(
-        String accountId,
+        String from,
         int page,
         int size
     ) {
-        return repository.findByAccountId(accountId, page, size);
+        return repository.findByFrom(from, page, size);
     }
 
     public StatementView getStatementByPaymentId( String paymentId ) {

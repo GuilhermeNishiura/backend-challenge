@@ -5,20 +5,23 @@ import java.time.Instant;
 public class StatementView {
 
     private final String id;
-    private final String accountId;
+    private final String from;
+    private final String to;
     private final String description;
     private final Double amount;
     private final Instant createdAt;
 
     public StatementView(
             String id,
-            String accountId,
+            String from,
+            String to,
             String description,
             Double amount,
             Instant createdAt
     ) {
         this.id = id;
-        this.accountId = accountId;
+        this.from = from;
+        this.to = to;
         this.description = description;
         this.amount = amount;
         this.createdAt = createdAt;
@@ -28,8 +31,12 @@ public class StatementView {
         return id;
     }
 
-    public String getAccountId() {
-        return accountId;
+    public String getFrom() {
+        return from;
+    }
+
+    public String getTo() {
+        return to;
     }
 
     public String getDescription() {

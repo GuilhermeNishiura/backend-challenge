@@ -44,6 +44,7 @@ public class PaymentCompletedListener {
                 new Statement(
                     event.getPaymentId(),
                     event.getFrom(),
+                    event.getTo(),
                     event.getDescription(),
                     event.getAmount(),
                     event.getCompletedAt()

@@ -72,7 +72,7 @@ public class StatementQueryController {
                 example = "123",
                 required = true
             )
-            @RequestParam(value = "accountId") String accountId,
+            @RequestParam(value = "from") String from,
 
             @Parameter(
                 description = "Número da página"
@@ -85,7 +85,7 @@ public class StatementQueryController {
             @RequestParam(value = "size", defaultValue = "10") int size
     ) {
         StatementPage result =
-            queryService.getStatements(accountId, page, size);
+            queryService.getStatements(from, page, size);
 
         List<StatementResponse> content =
             result.getContent().stream()
@@ -152,7 +152,8 @@ public class StatementQueryController {
     private StatementResponse toResponse(StatementView view) {
         return new StatementResponse(
             view.getId(),
-            view.getAccountId(),
+            view.getFrom(),
+            view.getTo(),
             view.getDescription(),
             view.getAmount(),
             view.getCreatedAt()

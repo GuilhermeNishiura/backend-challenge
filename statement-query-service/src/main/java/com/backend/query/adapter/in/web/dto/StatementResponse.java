@@ -10,8 +10,11 @@ public class StatementResponse {
     @Schema(description = "ID do extrato", example = "fc8e50c0-10c3-4304-9188-76624f4a72c5")
     private final String id;
 
-    @Schema(description = "ID da conta", example = "123")
-    private final String accountId;
+    @Schema(description = "ID da conta de origem", example = "123")
+    private final String from;
+
+    @Schema(description = "ID da conta de destino", example = "456")
+    private final String to;
 
     @Schema(description = "Descrição do extrato", example = "Pagamento Kafka real")
     private final String description;
@@ -24,13 +27,15 @@ public class StatementResponse {
 
     public StatementResponse(
             String id,
-            String accountId,
+            String from,
+            String to,
             String description,
             Double amount,
             Instant createdAt
     ) {
         this.id = id;
-        this.accountId = accountId;
+        this.from = from;
+        this.to = to;
         this.description = description;
         this.amount = amount;
         this.createdAt = createdAt;
@@ -40,8 +45,12 @@ public class StatementResponse {
         return id;
     }
 
-    public String getAccountId() {
-        return accountId;
+    public String getFrom() {
+        return from;
+    }
+
+    public String getTo() {
+        return to;
     }
 
     public String getDescription() {

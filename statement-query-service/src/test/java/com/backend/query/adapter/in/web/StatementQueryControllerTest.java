@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -18,7 +18,7 @@ import com.backend.query.application.query.model.StatementPage;
 import com.backend.query.application.query.model.StatementView;
 
 
-@SpringBootTest
+@WebMvcTest(StatementQueryController.class)
 @AutoConfigureMockMvc(addFilters = false)
 class StatementQueryControllerTest {
 
@@ -34,6 +34,7 @@ class StatementQueryControllerTest {
         StatementView view = new StatementView(
             "payment-1",
             "123",
+            "456",
             "Pagamento teste",
             100.0,
             Instant.parse("2026-03-31T14:51:09Z")
@@ -51,7 +52,7 @@ class StatementQueryControllerTest {
 
         mockMvc.perform(
                 get("/api/statements")
-                    .param("accountId", "123")
+                    .param("from", "123")
                     .param("page", "0")
                     .param("size", "10")
             )

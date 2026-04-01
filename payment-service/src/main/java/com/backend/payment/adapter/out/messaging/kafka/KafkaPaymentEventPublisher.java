@@ -1,10 +1,9 @@
-package com.backend.payment.adapter.out.messaging;
+package com.backend.payment.adapter.out.messaging.kafka;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
-import com.backend.payment.adapter.out.messaging.kafka.PaymentCompletedKafkaEvent;
 import com.backend.payment.domain.event.PaymentCompleted;
 import com.backend.payment.domain.port.out.PaymentEventPublisherPort;
 

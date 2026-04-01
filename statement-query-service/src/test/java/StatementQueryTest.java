@@ -1,9 +1,13 @@
+import java.time.Instant;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -11,10 +15,6 @@ import com.backend.query.application.port.out.StatementQueryRepository;
 import com.backend.query.application.query.StatementQueryService;
 import com.backend.query.application.query.model.StatementPage;
 import com.backend.query.application.query.model.StatementView;
-import java.time.Instant;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.verify;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -33,6 +33,7 @@ class StatementQueryServiceTest {
         StatementView statement = new StatementView(
             "payment-1",
             "123",
+            "456",
             "Pagamento teste",
             100.0,
             Instant.now()
@@ -45,7 +46,7 @@ class StatementQueryServiceTest {
             true
         );
 
-        when(repository.findByAccountId("123", 0, 10))
+        when(repository.findByFrom("123", 0, 10))
             .thenReturn(page);
 
         // when
@@ -60,6 +61,6 @@ class StatementQueryServiceTest {
         assertTrue(result.isLast());
 
         verify(repository)
-            .findByAccountId("123", 0, 10);
+            .findByFrom("123", 0, 10);
     }
 }

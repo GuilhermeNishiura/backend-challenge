@@ -27,8 +27,8 @@ public class MongoStatementQueryAdapter
     }
 
     @Override
-    public StatementPage findByAccountId(
-        String accountId,
+    public StatementPage findByFrom(
+        String from,
         int page,
         int size
     ) {
@@ -39,7 +39,7 @@ public class MongoStatementQueryAdapter
         );
 
         Page<StatementDocument> result =
-            repository.findByAccountId(accountId, pageable);
+            repository.findByFrom(from, pageable);
 
         List<StatementView> content =
             result.getContent().stream()
@@ -65,7 +65,8 @@ public class MongoStatementQueryAdapter
     private StatementView toView(StatementDocument doc) {
         return new StatementView(
             doc.getId(),
-            doc.getAccountId(),
+            doc.getFrom(),
+            doc.getTo(),
             doc.getDescription(),
             doc.getAmount(),
             doc.getCreatedAt()

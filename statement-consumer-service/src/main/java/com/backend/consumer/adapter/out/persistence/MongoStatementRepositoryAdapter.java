@@ -3,9 +3,9 @@ package com.backend.consumer.adapter.out.persistence;
 import org.springframework.stereotype.Component;
 
 import com.backend.consumer.adapter.out.persistence.entity.StatementDocument;
+import com.backend.consumer.adapter.out.persistence.repository.StatementMongoRepository;
 import com.backend.consumer.domain.model.Statement;
 import com.backend.consumer.domain.port.out.StatementRepositoryPort;
-import com.backend.consumer.adapter.out.persistence.repository.StatementMongoRepository;
 
 @Component
 public class MongoStatementRepositoryAdapter
@@ -31,7 +31,8 @@ public class MongoStatementRepositoryAdapter
     private StatementDocument toDocument(Statement s) {
         StatementDocument d = new StatementDocument();
         d.setId(s.getId());
-        d.setAccountId(s.getAccountId());
+        d.setFromAccountId(s.getFrom());
+        d.setToAccountId(s.getTo());
         d.setDescription(s.getDescription());
         d.setAmount(s.getAmount());
         d.setCreatedAt(s.getCreatedAt());

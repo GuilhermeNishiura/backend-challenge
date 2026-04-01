@@ -10,7 +10,8 @@ public class StatementDocument {
 
     @Id
     private String id;
-    private String accountId;
+    private String from;
+    private String to;
     private String description;
     private Double amount;
     private Instant createdAt;
@@ -21,8 +22,11 @@ public class StatementDocument {
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
-    public String getAccountId() { return accountId; }
-    public void setAccountId(String accountId) { this.accountId = accountId; }
+    public String getFromAccountId() { return from; }
+    public void setFromAccountId(String from) { this.from = from; }
+
+    public String getToAccountId() { return to; }
+    public void setToAccountId(String to) { this.to = to; }
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
