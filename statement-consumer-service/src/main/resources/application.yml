@@ -1,10 +1,6 @@
 kafka:
   bootstrap-servers: localhost:9092
 
-feature:
-  statement-consumer:
-    enabled: true
-
 logging:
   level:
     root: INFO
@@ -12,10 +8,3 @@ logging:
 server:
   port: 8082
 
-spring:
-  profiles:
-    active: mock
-
-  data:
-    mongodb:
-      uri: mongodb://localhost:27017/statement_db

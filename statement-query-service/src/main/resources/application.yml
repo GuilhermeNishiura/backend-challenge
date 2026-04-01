@@ -2,9 +2,12 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/statement_db
-  profiles:
-    active: mock
-
 
 server:
   port: 8083
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true

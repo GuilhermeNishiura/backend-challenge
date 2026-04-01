@@ -51,6 +51,11 @@ Este projeto implementa uma solução completa de backend baseada em microsservi
 <li>MongoDB em localhost:27017</li>
 </ul>
 
+<h3>Permissão de Perfil</h3>
+<p>
+Por padrão, o projeto utiliza o perfil "prod", o qual tem a permissão de acesso ao Swagger e Apis, tanto payment quanto query. Outros perfis são bloqueados, pela proteção de Endpoints JWT.
+</p>
+
 <h3>Executando os serviços</h3>
 
 ```bash
@@ -78,16 +83,10 @@ mvn spring-boot:run
 POST http://localhost:8081/api/payments
 ```
 
-<h3>Consumir evento (mock Kafka)</h3>
-
-```http
-POST http://localhost:8082/internal/test/consume
-```
-
 <h3>Consultar extratos</h3>
 
 ```http
-GET http://localhost:8083/api/statements?accountId=123&page=0&size=10
+GET http://localhost:8083/api/statements?accountId=123
 ```
 
 ---
@@ -96,7 +95,6 @@ GET http://localhost:8083/api/statements?accountId=123&page=0&size=10
 
 <ul>
 <li>http://localhost:8081/swagger-ui.html</li>
-<li>http://localhost:8082/swagger-ui.html</li>
 <li>http://localhost:8083/swagger-ui.html</li>
 </ul>
 

@@ -2,9 +2,6 @@ server:
   port: 8081
 
 spring:
-  profiles:
-    active: mock
-  
   sql:
     init:
       mode: always
@@ -22,8 +19,25 @@ spring:
     defer-datasource-initialization: true
     show-sql: true
 
-
   h2:
     console:
       enabled: true
       path: /h2-console
+  
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          secret-key: my-secret-key
+
+  kafka:
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    properties:
+      spring.json.add.type.headers: false
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
