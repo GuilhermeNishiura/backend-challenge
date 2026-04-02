@@ -1,4 +1,4 @@
-package com.backend.query.config;
+package com.backend.query.adapter.in.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

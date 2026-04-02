@@ -1,4 +1,4 @@
-package com.backend.consumer.config;
+package com.backend.consumer.adapter.in.config;
 
 import java.util.HashMap;
 import java.util.Map;

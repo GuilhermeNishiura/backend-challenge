@@ -109,6 +109,7 @@
                     <excludes>
                     <exclude>**/domain/model/**</exclude>
                     <exclude>**/adapter/out/persistence/entity/**</exclude>
+                    <exclude>**/*Application*</exclude>
                     </excludes>
                 </configuration>
             </plugin>

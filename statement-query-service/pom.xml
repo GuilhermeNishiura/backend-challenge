@@ -99,6 +99,9 @@
                     <exclude>**/domain/model/**</exclude>
                     <exclude>**/adapter/out/persistence/entity/**</exclude>
                     <exclude>**/adapter/in/web/dto/**</exclude>
+                    <exclude>**/*Application*</exclude>
+                    <exclude>**/application/query/model/**</exclude>
+                    <exclude>**/config/SecurityConfig*</exclude>
                     </excludes>
                 </configuration>
             </plugin>

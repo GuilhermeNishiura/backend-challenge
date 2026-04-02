@@ -1,4 +1,4 @@
-package com.backend.query.config;
+package com.backend.query.adapter.in.config;
 
 import java.nio.charset.StandardCharsets;
 

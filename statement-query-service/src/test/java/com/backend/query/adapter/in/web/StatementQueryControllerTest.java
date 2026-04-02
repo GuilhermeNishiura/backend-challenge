@@ -57,6 +57,35 @@ class StatementQueryControllerTest {
                     .param("size", "10")
             )
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.content[0].id").value("payment-1"));
+            .andExpect(jsonPath("$.content").isArray())
+            .andExpect(jsonPath("$.content[0].id").value("payment-1")) 
+            .andExpect(jsonPath("$.totalElements").value(1))
+            .andExpect(jsonPath("$.totalPages").value(1))
+            .andExpect(jsonPath("$.last").value(true));
+    }
+
+    @Test
+    void shouldReturnStatementByPaymentId() throws Exception {
+
+        StatementView view = new StatementView(
+            "payment-123",
+            "123",
+            "456",
+            "Descrição",
+            200.0,
+            Instant.now()
+        );
+
+        when(queryService.getStatementByPaymentId("payment-123"))
+            .thenReturn(view);
+
+        mockMvc.perform(
+                get("/api/statements/payment-123")
+            )
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.id").value("payment-123"))
+            .andExpect(jsonPath("$.from").value("123"))
+            .andExpect(jsonPath("$.to").value("456"))
+            .andExpect(jsonPath("$.amount").value(200.0));
     }
 }

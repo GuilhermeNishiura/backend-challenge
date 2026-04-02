@@ -1,4 +1,4 @@
-package com.adapter.in.messaging;
+package com.backend.consumer.adapter.in.messaging;
 
 import java.time.Instant;
 
@@ -14,8 +14,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.backend.consumer.adapter.in.messaging.PaymentCompletedKafkaEvent;
-import com.backend.consumer.adapter.in.messaging.PaymentCompletedListener;
 import com.backend.consumer.application.port.in.FeatureToggleService;
 import com.backend.consumer.domain.model.Statement;
 import com.backend.consumer.domain.service.StatementService;

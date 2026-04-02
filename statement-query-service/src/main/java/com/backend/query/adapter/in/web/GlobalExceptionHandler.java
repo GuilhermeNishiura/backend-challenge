@@ -4,7 +4,7 @@ import java.time.Instant;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -27,30 +27,24 @@ public class GlobalExceptionHandler {
         );
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ExceptionHandler(MissingServletRequestParameterException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ValidationErrorResponse handleValidationError(
-            MethodArgumentNotValidException ex
+    public ValidationErrorResponse handleMissingRequestParam(
+            MissingServletRequestParameterException ex
     ) {
-        List<ValidationErrorResponse.FieldError> errors =
-            ex.getBindingResult()
-              .getFieldErrors()
-              .stream()
-              .map(error ->
-                  new ValidationErrorResponse.FieldError(
-                      error.getField(),
-                      error.getDefaultMessage()
-                  )
-              )
-              .toList();
-
         return new ValidationErrorResponse(
             "VALIDATION_ERROR",
             "Requisição inválida",
-            errors,
+            List.of(
+                new ValidationErrorResponse.FieldError(
+                    ex.getParameterName(),
+                    "Parâmetro obrigatório não informado"
+                )
+            ),
             Instant.now()
         );
     }
+
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
