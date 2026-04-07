@@ -110,7 +110,7 @@ mvn test
 
 ---
 
-<h2>7. Testes Automatizados (BDD e E2E)
+<h2>7. Testes Automatizados (BDD e E2E) </h2>
 
 <p> O projeto possui testes automatizados utilizando Cucumber (BDD) e RestAssured, organizados por responsabilidade de serviço e testes de ponta a ponta (E2E). Cada microsserviço possui seus próprios cenários BDD, focados no comportamento observável e no contrato da API.</p>
 
