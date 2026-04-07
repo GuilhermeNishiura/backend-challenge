@@ -3,7 +3,7 @@ package com.backend.payment.adapter.in.web.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Pattern;
 
 public class PaymentRequest {
     
@@ -26,8 +26,11 @@ public class PaymentRequest {
             example = "100.50"
         )
     @NotNull(message = "Valor é obrigatório")
-    @Positive(message = "Valor deve ser positivo")
-    private Double valor;
+    @Pattern(
+            regexp = "^\\d+(\\.\\d{1,2})?$",
+            message = "Valor monetário inválido"
+        )
+    private String valor;
 
     
     @Schema(
@@ -39,6 +42,6 @@ public class PaymentRequest {
     public String getContaOrigem() { return contaOrigem; }
     public String getContaDestino() { return contaDestino; }
     public String getDescricao() { return descricao; }
-    public Double getValor() { return valor; }
+    public String getValor() { return valor; }
 
 }

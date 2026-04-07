@@ -4,16 +4,21 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.Customizer;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 @Profile("prod")
-public class SecurityConfig {    
+public class SecurityConfig {   
+    private final JwtDecoder jwtDecoder;
+    
+    public SecurityConfig(JwtDecoder jwtDecoder) {
+        this.jwtDecoder = jwtDecoder;
+    }
+
     @Bean
     public SecurityFilterChain prodSecurity(HttpSecurity http) throws Exception {
         http
@@ -31,11 +36,9 @@ public class SecurityConfig {
 
                 ).permitAll()
 
-                .requestMatchers(HttpMethod.GET, "/api/statements/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/statements**").permitAll()
                 .anyRequest().authenticated()
             )
-            .oauth2ResourceServer(oath -> oath.jwt(Customizer.withDefaults()));
+            .oauth2ResourceServer(oath -> oath.jwt(jwt -> jwt.decoder(jwtDecoder)));
 
         return http.build();
     }

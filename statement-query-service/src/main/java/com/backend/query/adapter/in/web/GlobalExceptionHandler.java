@@ -8,6 +8,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.backend.query.adapter.in.web.dto.ErrorResponse;
 import com.backend.query.adapter.in.web.dto.StatementNotFoundException;
@@ -45,6 +46,21 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler(NoHandlerFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ValidationErrorResponse handleNoHandlerFound(NoHandlerFoundException ex) {
+        return new ValidationErrorResponse(
+            "VALIDATION_ERROR",
+            "Requisição inválida",
+            List.of(
+                new ValidationErrorResponse.FieldError(
+                    "path",
+                    "Endpoint inválido ou incompleto"
+                )
+            ),
+            Instant.now()
+        );
+    }
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

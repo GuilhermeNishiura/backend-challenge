@@ -63,10 +63,12 @@ public class PaymentController {
     @PostMapping 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void pagar(@Valid @RequestBody PaymentRequest request) {
+        double amount = Double.parseDouble(request.getValor());
+
         Payment payment = new Payment(
             request.getContaOrigem(),
             request.getContaDestino(),
-            request.getValor(),
+            amount,
             request.getDescricao()
         );
         paymentService.realizarPagamento(payment);

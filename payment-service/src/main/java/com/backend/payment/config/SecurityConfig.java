@@ -2,19 +2,23 @@ package com.backend.payment.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.context.annotation.Profile;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.Customizer;
-
 
 @Configuration
 @EnableWebSecurity
 @Profile("prod")
 public class SecurityConfig {
+    private final JwtDecoder jwtDecoder;
+
+    public SecurityConfig(JwtDecoder jwtDecoder) {
+        this.jwtDecoder = jwtDecoder;
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -30,11 +34,10 @@ public class SecurityConfig {
                     "/v3/api-docs.yaml",
                     "/v3/api-docs/swagger-config"
                 ).permitAll()
-
-                .requestMatchers(HttpMethod.POST, "/api/payments/**").permitAll()
+                
                 .anyRequest().authenticated()
             )
-            .oauth2ResourceServer(oauth -> oauth.jwt(Customizer.withDefaults()));
+            .oauth2ResourceServer(oauth -> oauth.jwt(jwt -> jwt.decoder(jwtDecoder)));
 
         return http.build();
     }

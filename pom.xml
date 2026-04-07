@@ -35,6 +35,7 @@
         <module>payment-service</module>
         <module>statement-consumer-service</module>
         <module>statement-query-service</module>
+        <module>e2e-tests</module>
     </modules>
 
     <build>

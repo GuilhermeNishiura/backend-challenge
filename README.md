@@ -110,6 +110,16 @@ mvn test
 
 ---
 
+<h2>7. Testes Automatizados (BDD e E2E)
+
+<p> O projeto possui testes automatizados utilizando Cucumber (BDD) e RestAssured, organizados por responsabilidade de serviço e testes de ponta a ponta (E2E). Cada microsserviço possui seus próprios cenários BDD, focados no comportamento observável e no contrato da API.</p>
+
+```bash
+cd payment-service
+mvn test
+```
+---
+
 <h2>8. Estrutura do Repositório</h2>
 
 ```
@@ -117,5 +127,5 @@ backend-challenge/
 ├── payment-service/
 ├── statement-consumer-service/
 ├── statement-query-service/
-└── postman/
+└── e2e-tests/
 ```

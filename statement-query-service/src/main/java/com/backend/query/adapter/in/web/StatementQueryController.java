@@ -3,6 +3,7 @@ package com.backend.query.adapter.in.web;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +24,9 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.constraints.NotBlank;
 
-
+@Validated
 @RestController
 @RequestMapping("/api/statements")
 public class StatementQueryController {
@@ -142,7 +144,7 @@ public class StatementQueryController {
                 example = "fc8e50c0-10c3-4304-9188-76624f4a72c5",
                 required = true
             )
-            @PathVariable("paymentId") String paymentId
+            @PathVariable("paymentId") @NotBlank String paymentId
     ) {
         StatementView view = queryService.getStatementByPaymentId(paymentId);
         return ResponseEntity.ok(toResponse(view));

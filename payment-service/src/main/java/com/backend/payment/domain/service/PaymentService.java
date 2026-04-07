@@ -30,6 +30,13 @@ public class PaymentService {
             payment.getToAccount()
         );
 
+        if (payment.getAmount() <= 0){
+            throw new BusinessException(
+                "INVALID_VALUE",
+                "Valor deve ser maior que zero"
+            );
+        }
+
         if (origem.getSaldo().compareTo(payment.getAmount()) < 0) {
             throw new BusinessException(
                     "INSUFFICIENT_BALANCE",
