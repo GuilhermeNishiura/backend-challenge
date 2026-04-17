@@ -1,0 +1,12 @@
+server:
+  port: 8085
+
+spring:
+  activemq:
+    user: admin
+    password: admin
+
+notification:
+  processing:
+    pending-cron: "*/5 * * * * *"
+    pending-batch-size: 1000

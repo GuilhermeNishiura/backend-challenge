@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Silencia logs de retry/update -->
+    <logger name="com.backend.notification.retry.domain.service" level="OFF"/>
+    <logger name="com.backend.notification.update.domain.service" level="OFF"/>
+
+    <!-- Silencia logs de ReflectionTestUtils -->
+    <logger name="org.springframework.test.util.ReflectionTestUtils" level="OFF"/>
+
+    <!-- Root logger -->
+    <root level="ERROR">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+</configuration>

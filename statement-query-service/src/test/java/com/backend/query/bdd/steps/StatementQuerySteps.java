@@ -1,6 +1,5 @@
 package com.backend.query.bdd.steps;
 
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
@@ -86,9 +85,6 @@ public class StatementQuerySteps {
     public void receiveNoContent() {
         response
             .then()
-            .statusCode(200)
-            .body("content.size()", equalTo(0))
-            .body("totalElements", equalTo(0));
-
+            .statusCode(204);
     }
 }

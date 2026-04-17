@@ -62,10 +62,10 @@ public class PaymentSteps {
     public void sendInvalidPayment() {
 
         Map<String, Object> payload = Map.of(
-            "from", "",         // inválido 
-            "to", "123",
-            "amount", -10.0,        // inválido
-            "description", ""
+            "contaOrigem", "",         // inválido 
+            "contaDestino", "123",
+            "valor", -10.0,        // inválido
+            "descricao", ""
         );
 
         response = request

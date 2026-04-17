@@ -1,5 +1,19 @@
+spring:
+  kafka:
+    consumer:
+      group-id: statement-consumer
+      auto-offset-reset: earliest
+
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+statement:
+  consumer:
+    enabled: true
+
+
 kafka:
-  bootstrap-servers: localhost:9092
+  bootstrap-servers: kafka:9092
 
 logging:
   level:

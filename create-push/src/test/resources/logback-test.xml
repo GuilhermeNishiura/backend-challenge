@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Silencia logs do controller -->
+    <logger name="com.backend.notification.push.controller" level="OFF"/>
+
+    <!-- Silencia logs de Spring Test -->
+    <logger name="org.springframework.test" level="OFF"/>
+    <logger name="org.springframework.boot.test" level="OFF"/>
+
+    <!-- Root logger sem appender -->
+    <root level="OFF"/>
+
+</configuration>

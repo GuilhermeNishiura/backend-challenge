@@ -101,6 +101,12 @@
             <scope>test</scope>
         </dependency>
 
+    
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring</artifactId>
+        <version>2.5.6.SEC03</version>
+      </dependency>
     </dependencies>
 
     <build>
@@ -143,7 +149,6 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
                 <configuration>
-                    <!-- ESSENCIAL para Cucumber + JUnit Platform -->
                     <useModulePath>false</useModulePath>
                 </configuration>
             </plugin>

@@ -1,0 +1,7 @@
+spring:
+  kafka:
+    bootstrap-servers: kafka:9092
+      
+  data:
+    mongodb:
+      uri: mongodb://mongodb:27017/statement_db

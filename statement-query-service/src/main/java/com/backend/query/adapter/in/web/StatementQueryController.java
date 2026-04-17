@@ -89,6 +89,12 @@ public class StatementQueryController {
         StatementPage result =
             queryService.getStatements(from, page, size);
 
+            
+        if (result.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+
+
         List<StatementResponse> content =
             result.getContent().stream()
                   .map(this::toResponse)

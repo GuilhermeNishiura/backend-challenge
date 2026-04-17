@@ -1,17 +1,7 @@
 spring:
   kafka:
     bootstrap-servers: localhost:9092
-    consumer:
-      group-id: statement-consumer
-      auto-offset-reset: earliest
-
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       
   data:
     mongodb:
       uri: mongodb://localhost:27017/statement_db
-
-statement:
-  consumer:
-    enabled: true

@@ -5,7 +5,10 @@
 <p>
 Este projeto implementa uma solução completa de backend baseada em microsserviços para processamento de pagamentos, geração de extratos e consultas, utilizando arquitetura orientada a eventos, CQRS, validações, segurança e testes automatizados.
 </p>
-
+<p>
+**Visão arquitetural e fluxo detalhado:**  
+Consulte [`docs/overview.md`](docs/overview.md)
+</p>
 </div>
 
 ---
@@ -37,6 +40,10 @@ Este projeto implementa uma solução completa de backend baseada em microsservi
 <tr><td>payment-service</td><td>8081</td><td>Criação de pagamentos e publicação de eventos</td></tr>
 <tr><td>statement-consumer-service</td><td>8082</td><td>Consumo de eventos e gravação de extratos</td></tr>
 <tr><td>statement-query-service</td><td>8083</td><td>Consulta de extratos com paginação</td></tr>
+<tr><td>notification-consumer</td><td>8084</td><td>Consumo de notificações e persistência</td></tr>
+<tr><td>notification-update</td><td>8085</td><td>Processamento de notificações PENDING</td></tr>
+<tr><td>notification-retry</td><td>8086</td><td>Reprocessamento de notificações ERROR</td></tr>
+<tr><td>create-push</td><td>8087</td><td>Simulação de provedor externo de push</td></tr>
 </tbody>
 </table>
 
@@ -49,6 +56,8 @@ Este projeto implementa uma solução completa de backend baseada em microsservi
 <li>Java 21</li>
 <li>Maven 3.9+</li>
 <li>MongoDB em localhost:27017</li>
+<li>Kafka</li>
+<li>ActiveMQ</li>
 </ul>
 
 <h3>Permissão de Perfil</h3>
@@ -73,6 +82,26 @@ cd statement-query-service
 mvn spring-boot:run
 ```
 
+```bash
+cd notification-consumer
+mvn spring-boot:run
+```
+
+```bash
+cd notification-update
+mvn spring-boot:run
+```
+
+```bash
+cd notification-retry
+mvn spring-boot:run
+```
+
+```bash
+cd create-push
+mvn spring-boot:run
+```
+
 ---
 
 <h2>4. Fluxo de Testes</h2>
@@ -89,6 +118,12 @@ POST http://localhost:8081/api/payments
 GET http://localhost:8083/api/statements?accountId=123
 ```
 
+<h3>Envio de push (interno)</h3>
+
+```http
+POST http://localhost:8087/push
+```
+
 ---
 
 <h2>5. Swagger</h2>
@@ -102,7 +137,7 @@ GET http://localhost:8083/api/statements?accountId=123
 
 <h2>6. Testes Unitários</h2>
 
-<p>O projeto possui testes unitários com JUnit 5 e Mockito para os três microsserviços, cobrindo regras críticas de negócio.</p>
+<p>O projeto possui testes unitários com JUnit 5 e Mockito com cobertura de JaCoCo.</p>
 
 ```bash
 mvn test
@@ -112,10 +147,9 @@ mvn test
 
 <h2>7. Testes Automatizados (BDD e E2E) </h2>
 
-<p> O projeto possui testes automatizados utilizando Cucumber (BDD) e RestAssured, organizados por responsabilidade de serviço e testes de ponta a ponta (E2E). Cada microsserviço possui seus próprios cenários BDD, focados no comportamento observável e no contrato da API.</p>
+<p> O projeto possui testes automatizados utilizando Cucumber (BDD) e RestAssured, organizados por responsabilidade de serviço e testes de ponta a ponta (E2E). Cada microsserviço possui seus próprios cenários BDD, focados no comportamento observável e no contrato da API. Os testes podem ser realizados cimuntaneamente, realizando o comando na pasta root, ou unitários, nas pastas e2e-tests para o teste de serviço e2e, ou a pasta dos serviços payment-service e statement-query-service para testar APIs isoladas.</p>
 
 ```bash
-cd payment-service
 mvn test
 ```
 ---
@@ -127,5 +161,11 @@ backend-challenge/
 ├── payment-service/
 ├── statement-consumer-service/
 ├── statement-query-service/
+├── notification-consumer/
+├── notification-update/
+├── notification-retry/
+├── create-push/
+├── docs/
+│   └── overview.md
 └── e2e-tests/
 ```

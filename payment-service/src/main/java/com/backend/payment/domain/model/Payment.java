@@ -15,6 +15,8 @@ public class Payment {
     private String toAccount;
     private Double amount;
     private String description;    
+
+    public Payment() {}
     
     public Payment(
             String contaOrigem,

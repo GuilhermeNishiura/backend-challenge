@@ -1,0 +1,13 @@
+server:
+  port: 8086
+
+spring:
+  activemq:
+    user: admin
+    password: admin
+
+notification:
+  processing:
+    error-cron: "*/30 * * * * *"
+    error-batch-size: 500
+    max-retries: 10

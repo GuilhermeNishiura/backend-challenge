@@ -1,0 +1,14 @@
+spring:
+  activemq:
+    in-memory: true
+    broker-url: vm://embedded?broker.persistent=false
+
+  kafka:
+    enabled: false
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/test_db
+
+security:
+  enabled: false

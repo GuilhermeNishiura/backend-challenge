@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.mockito.ArgumentMatchers.any;
 import org.mockito.Mock;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -16,6 +17,7 @@ import com.backend.payment.domain.model.Account;
 import com.backend.payment.domain.model.Payment;
 import com.backend.payment.domain.port.out.AccountRepositoryPort;
 import com.backend.payment.domain.port.out.PaymentEventPublisherPort;
+import com.backend.payment.domain.port.out.PaymentNotificationPublisherPort;
 
 @ExtendWith(MockitoExtension.class)
 class PaymentServiceTest {
@@ -25,13 +27,17 @@ class PaymentServiceTest {
     @Mock
     PaymentEventPublisherPort eventPublisher;
 
+    @Mock
+    PaymentNotificationPublisherPort notificationPublisher;
+
     PaymentService paymentService;
 
     @BeforeEach
     void setup() {
         paymentService = new PaymentService(
             accountRepository,
-            eventPublisher
+            eventPublisher,
+            notificationPublisher
         );
 
     }
@@ -126,5 +132,62 @@ class PaymentServiceTest {
             .isInstanceOf(BusinessException.class);
 
         verify(eventPublisher, never()).publish(any());
+    }
+
+    //5) Rejeita dados invalidos
+    @Test
+    void shouldRejectPaymentWhenAmountIsZeroOrNegative() {
+
+        Payment payment = new Payment(
+            "123",
+            "456",
+            0.0, 
+            "Pagamento inválido"
+        );
+
+        Account origem = new Account("123", 100.00);
+        Account destino = new Account("456", 50.00);
+
+        when(accountRepository.findById("123")).thenReturn(origem);
+        when(accountRepository.findById("456")).thenReturn(destino);
+
+        assertThatThrownBy(() ->
+                paymentService.realizarPagamento(payment))
+            .isInstanceOf(BusinessException.class)
+            .hasMessage("Valor deve ser maior que zero");
+
+        verify(eventPublisher, never()).publish(any());
+        verify(notificationPublisher, never()).publish(any());
+    }
+
+    //6) Falha ao publicar ActiveMQ
+    @Test
+    void shouldContinueProcessWhenNotificationPublishFails() {
+
+        Payment payment = new Payment(
+            "123",
+            "456",
+            100.00,
+            "Pagamento teste"
+        );
+
+        Account origem = new Account("123", 200.00);
+        Account destino = new Account("456", 50.00);
+
+        when(accountRepository.findById("123")).thenReturn(origem);
+        when(accountRepository.findById("456")).thenReturn(destino);
+
+        // Falha
+        doThrow(new RuntimeException("ActiveMQ down"))
+            .when(notificationPublisher)
+            .publish(any());
+
+        paymentService.realizarPagamento(payment);
+
+        // pagamento foi processado normalmente
+        verify(accountRepository).save(origem);
+        verify(accountRepository).save(destino);
+        verify(eventPublisher).publish(any());
+        verify(notificationPublisher).publish(any());
     }
 }

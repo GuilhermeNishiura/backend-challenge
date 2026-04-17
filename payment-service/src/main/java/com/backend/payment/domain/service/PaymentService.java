@@ -1,26 +1,39 @@
 package com.backend.payment.domain.service;
 
-import java.time.Instant;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.backend.payment.adapter.in.web.BusinessException;
-import com.backend.payment.domain.event.PaymentCompleted;
+import com.backend.payment.adapter.out.messaging.activemq.PaymentNotificationEventMapper;
+import com.backend.payment.adapter.out.messaging.kafka.PaymentKafkaEventMapper;
 import com.backend.payment.domain.model.Payment;
 import com.backend.payment.domain.port.out.AccountRepositoryPort;
 import com.backend.payment.domain.port.out.PaymentEventPublisherPort;
+import com.backend.payment.domain.port.out.PaymentNotificationPublisherPort;
 
 public class PaymentService {
 
     private final AccountRepositoryPort accountRepository;
-    private final PaymentEventPublisherPort eventPublisher;
+    private final PaymentEventPublisherPort kafkaPublisher;
+    private final PaymentNotificationPublisherPort notificationPublisher;
 
     public PaymentService(
             AccountRepositoryPort accountRepository,
-            PaymentEventPublisherPort eventPublisher) {
+            PaymentEventPublisherPort kafkaPublisher,
+            PaymentNotificationPublisherPort notificationPublisher
+        ) {
 
         this.accountRepository = accountRepository;
-        this.eventPublisher = eventPublisher;
+        this.kafkaPublisher = kafkaPublisher;
+        this.notificationPublisher = notificationPublisher;
     }
 
+    
+    private static final Logger log = LoggerFactory.getLogger(PaymentService.class);
+
+
+    @Transactional
     public void realizarPagamento(Payment payment) {
 
         var origem = accountRepository.findById(
@@ -49,16 +62,23 @@ public class PaymentService {
 
         accountRepository.save(origem);
         accountRepository.save(destino);
-        
-        PaymentCompleted event = new PaymentCompleted(
-            payment.getId(),
-            payment.getFromAccount(),
-            payment.getToAccount(),
-            payment.getAmount(),
-            payment.getDescription(),
-            Instant.now()
+     
+        // Kafka
+        kafkaPublisher.publish(
+            PaymentKafkaEventMapper.from(payment)
         );
 
-        eventPublisher.publish(event);
+        // ActiveMQ       
+        try {
+            notificationPublisher.publish(
+                PaymentNotificationEventMapper.from(payment)
+            );
+        } catch (Exception ex) {
+            log.error(
+                "Falha ao publicar notificacao no ActiveMQ para paymentId={}",
+                payment.getId(),
+                ex
+            );
+        }
     }
 }

@@ -35,6 +35,16 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     properties:
       spring.json.add.type.headers: false
+  
+  activemq:
+    user: admin
+    password: admin
+
+
+payment:
+  queue:
+    notification: payment.notifications
+
 
 springdoc:
   api-docs:

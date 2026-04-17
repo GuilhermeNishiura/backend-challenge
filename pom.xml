@@ -36,6 +36,10 @@
         <module>statement-consumer-service</module>
         <module>statement-query-service</module>
         <module>e2e-tests</module>
+        <module>notification-consumer</module>
+        <module>notification-update</module>
+        <module>notification-retry</module>
+        <module>create-push</module>
     </modules>
 
     <build>

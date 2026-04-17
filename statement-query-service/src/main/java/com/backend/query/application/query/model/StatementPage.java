@@ -36,4 +36,8 @@ public class StatementPage {
     public boolean isLast() {
         return last;
     }
+
+    public boolean isEmpty(){
+        return content.isEmpty();
+    }
 }

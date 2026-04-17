@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Silencia logs do listener -->
+    <logger name="com.backend.notification.consumer.messaging.listener"
+            level="OFF"/>
+
+    <!-- Root logger -->
+    <root level="ERROR">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+</configuration>

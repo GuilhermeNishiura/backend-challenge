@@ -1,0 +1,3 @@
+logging:
+  level:
+    com.backend.notification.consumer.messaging.listener: OFF

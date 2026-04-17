@@ -1,0 +1,10 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/notification_db
+
+  activemq:
+    broker-url: tcp://localhost:61616
+
+create-push:
+  url: http://localhost:8087/push

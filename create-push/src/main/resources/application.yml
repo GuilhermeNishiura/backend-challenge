@@ -1,0 +1,10 @@
+server:
+  port: 8087
+
+spring:
+  applicqtion:
+    name: create-push
+  activemq:
+    user: admin
+    password: admin
+

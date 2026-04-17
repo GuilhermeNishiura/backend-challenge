@@ -126,6 +126,27 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- ActiveMQ -->
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-broker</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-activemq</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring</artifactId>
+            <version>2.5.6.SEC03</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -156,6 +177,8 @@
                     <excludes>
                     <exclude>**/domain/model/**</exclude>
                     <exclude>**/adapter/in/web/dto/**</exclude>
+                    <exclude>**/adapter/out/configuration/**</exclude>
+                    <exclude>**/config/**</exclude>
                     <exclude>**/*Application*</exclude>
                     </excludes>
                 </configuration>
@@ -165,8 +188,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
                 <configuration>
-                    <!-- ESSENCIAL para Cucumber + JUnit Platform -->
-                    <useModulePath>false</useModulePath>
+                    <useModulePath>false</useModulePath>          
                 </configuration>
             </plugin>
         </plugins>

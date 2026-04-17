@@ -1,0 +1,11 @@
+server:
+  port: 8084
+
+spring:
+  activemq:
+    user: admin
+    password: admin
+
+notification:
+  queue:
+    payment: payment.notifications
