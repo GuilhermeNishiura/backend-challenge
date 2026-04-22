@@ -34,9 +34,9 @@ public class PaymentController {
     @Operation(
         summary = "Realizar pagamento",
         description = """
-            Processa um pagamento e publica um evento no Kafka.
-            O resultado do processamento deve ser consultado posteriormente
-            pelo serviço de query.
+            Processa um pagamento e publica um evento no Kafka e ActiveMQ.
+            O statement gerado deve ser consultado posteriormente
+            pelo serviço de query. O notification não possuí saída por API.
             """
     )
     

@@ -8,6 +8,6 @@ spring:
 
 notification:
   processing:
-    error-cron: "*/30 * * * * *"
+    error-cron: "*/10 * * * * *" #timer
     error-batch-size: 500
     max-retries: 10

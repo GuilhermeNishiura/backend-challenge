@@ -36,7 +36,7 @@ public class PaymentToStatementSteps {
             "contaOrigem", "123",
             "contaDestino", "456",
             "valor", 100.0,
-            "descricao", "Teste e2e"
+            "descricao", "Teste e2e - Kafka"
         );
 
         given()
@@ -105,7 +105,7 @@ public class PaymentToStatementSteps {
             .then()
             .statusCode(200)
             .body("totalElements", greaterThan(0))
-            .body("content.description", hasItem("Teste e2e"));
+            .body("content.description", hasItem("Teste e2e - Kafka"));
     }
 
     @Then("a listagem de extratos respeita a paginaçao")

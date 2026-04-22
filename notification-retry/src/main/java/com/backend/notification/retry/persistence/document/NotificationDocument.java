@@ -14,6 +14,7 @@ public class NotificationDocument {
     private String eventId;
     private String paymentId;
     private String customerId;
+    private String description;
 
     private String tipo;
     private String titulo;
@@ -40,6 +41,9 @@ public class NotificationDocument {
 
     public String getCustomerId() { return customerId;}
     public void setCustomerId(String customerId) { this.customerId = customerId; }
+
+    public String getDescription() { return description;}
+    public void setDescription(String description) { this.description = description; }
 
     public String getTipo() { return tipo; }
     public void setTipo(String tipo) { this.tipo = tipo; }

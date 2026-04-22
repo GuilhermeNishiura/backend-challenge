@@ -1,12 +1,16 @@
 package com.backend.notification.push.controller;
 
-import com.backend.notification.push.dto.CreatePushRequest;
-import com.backend.notification.push.dto.CreatePushResponse;
+import java.util.UUID;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.UUID;
+import com.backend.notification.push.dto.CreatePushRequest;
+import com.backend.notification.push.dto.CreatePushResponse;
 
 @RestController
 @RequestMapping("/push")
@@ -14,11 +18,12 @@ public class CreatePushController {
 
     private static final Logger log =
             LoggerFactory.getLogger(CreatePushController.class);
+    
+    private boolean shouldFail = true;
 
     @PostMapping
     public CreatePushResponse push(
-            @RequestBody CreatePushRequest request,
-            @RequestParam(defaultValue = "false") boolean fail
+            @RequestBody CreatePushRequest request
     ) {
 
         log.info(
@@ -28,9 +33,13 @@ public class CreatePushController {
         );
 
         // Simulação de falha controlada
-        if (fail) {
-            log.error("Simulando falha no envio do push");
-            return CreatePushResponse.error("Push provider unavailable");
+        if (request.getDescription().contains("E2E_FAIL")){
+            if(shouldFail) {
+                shouldFail = !shouldFail;
+
+                log.error("Simulando falha no envio do push");
+                return CreatePushResponse.error("Push provider unavailable");
+            }
         }
 
         // Simulação de sucesso

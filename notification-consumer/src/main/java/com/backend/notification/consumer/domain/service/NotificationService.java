@@ -33,6 +33,7 @@ public class NotificationService {
         doc.setEventId(event.getEventId());
         doc.setPaymentId(event.getPayment().getPaymentId());
         doc.setCustomerId(event.getPayment().getCustomerId());
+        doc.setDescription(event.getPayment().getDescription());
 
         doc.setTipo(event.getEventType());
         doc.setTitulo("Pagamento recebido");

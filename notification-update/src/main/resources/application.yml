@@ -8,5 +8,5 @@ spring:
 
 notification:
   processing:
-    pending-cron: "*/5 * * * * *"
+    pending-cron: "*/10 * * * * *" #timer
     pending-batch-size: 1000

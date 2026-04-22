@@ -14,8 +14,11 @@ import io.swagger.v3.oas.annotations.info.Info;
         description = """
             API responsável pela gestão de pagamentos.
             
-            Este serviço faz parte de uma arquitetura orientada a eventos
-            (CQRS + Kafka), sendo utilizado exclusivamente para incersção de pagamentos.
+            Este serviço faz parte de uma arquitetura orientada a eventos com dois subsistemas,
+            sendo utilizado exclusivamente para incersção de pagamentos.
+
+            O primeiro sub sistema usa Kafka para gravar transações em um banco MongoDB.
+            O segundo sub sistema usa ActiveMQ para gravar extratos em um banco MongoDB.
             """
 
     )

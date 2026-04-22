@@ -11,7 +11,7 @@ public class PaymentNotificationEventMapper {
 
         PaymentNotificationEvent event = new PaymentNotificationEvent();
         event.setEventId(UUID.randomUUID().toString());
-        event.setEventType("PAYMENT_COMPLETED");
+        event.setEventType("PAYMENT_CREATED");
         event.setOccurredAt(Instant.now());
 
         PaymentNotificationEvent.PaymentPayload payload =
@@ -22,7 +22,7 @@ public class PaymentNotificationEventMapper {
         payload.setAmount(payment.getAmount());
         payload.setCurrency("BRL");
         payload.setDescription(payment.getDescription());
-        payload.setStatus("COMPLETED");
+        payload.setStatus("CREATED");
 
         event.setPayment(payload);
         return event;

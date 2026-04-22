@@ -26,6 +26,7 @@ public class CreatePushClient {
         CreatePushRequest request = new CreatePushRequest(
                 doc.getId(),
                 doc.getCustomerId(),
+                doc.getDescription(),
                 doc.getTitulo(),
                 doc.getMensagem()
         );
