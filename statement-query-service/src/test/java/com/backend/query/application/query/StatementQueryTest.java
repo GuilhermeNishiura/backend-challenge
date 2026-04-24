@@ -14,7 +14,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.backend.query.application.port.out.StatementQueryRepository;
+import com.backend.query.adapter.in.port.StatementQueryPort;
 import com.backend.query.application.query.model.StatementPage;
 import com.backend.query.application.query.model.StatementView;
 import com.backend.query.adapter.in.web.dto.StatementNotFoundException;
@@ -24,7 +24,7 @@ import com.backend.query.adapter.in.web.dto.StatementNotFoundException;
 class StatementQueryServiceTest {
 
     @Mock
-    private StatementQueryRepository repository;
+    private StatementQueryPort repository;
 
     @InjectMocks
     private StatementQueryService service;
@@ -39,7 +39,8 @@ class StatementQueryServiceTest {
             "456",
             "Pagamento teste",
             100.0,
-            Instant.now()
+            Instant.now(),
+            true
         );
 
         StatementPage page = new StatementPage(
@@ -79,7 +80,8 @@ class StatementQueryServiceTest {
                 "456",
                 "Description",
                 100.0,
-                Instant.now()
+                Instant.now(),
+                true
             );
 
         when(repository.findByPaymentId(paymentId))

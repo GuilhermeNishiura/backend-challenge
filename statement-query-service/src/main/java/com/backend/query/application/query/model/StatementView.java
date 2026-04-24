@@ -2,6 +2,9 @@ package com.backend.query.application.query.model;
 
 import java.time.Instant;
 
+import com.backend.query.domain.model.StatementEntity;
+import com.backend.query.domain.model.StatementMongo;
+
 public class StatementView {
 
     private final String id;
@@ -10,6 +13,7 @@ public class StatementView {
     private final String description;
     private final Double amount;
     private final Instant createdAt;
+    private final boolean synced;
 
     public StatementView(
             String id,
@@ -17,7 +21,8 @@ public class StatementView {
             String to,
             String description,
             Double amount,
-            Instant createdAt
+            Instant createdAt,
+            boolean synced
     ) {
         this.id = id;
         this.from = from;
@@ -25,30 +30,45 @@ public class StatementView {
         this.description = description;
         this.amount = amount;
         this.createdAt = createdAt;
+        this.synced = synced;
     }
 
-    public String getId() {
-        return id;
+    public static StatementView fromMongo(StatementMongo mongo) {
+        return new StatementView(
+            mongo.getId(),
+            mongo.getFrom(),
+            mongo.getTo(),
+            mongo.getDescription(),
+            mongo.getAmount(),
+            mongo.getCreatedAt(),
+            mongo.getSynced()
+        );
     }
 
-    public String getFrom() {
-        return from;
+    public static StatementView fromEntity(StatementEntity entity) {
+        return new StatementView(
+            entity.getExternalId(),
+            entity.getFrom(),
+            entity.getTo(),
+            entity.getDescription(),
+            entity.getAmount(),
+            entity.getCreatedAt(),
+            entity.getSynced()
+        );
     }
 
-    public String getTo() {
-        return to;
-    }
+    public String getId() { return id; }
 
-    public String getDescription() {
-        return description;
-    }
+    public String getFrom() { return from; }
 
-    public Double getAmount() {
-        return amount;
-    }
+    public String getTo() { return to; }
 
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
+    public String getDescription() { return description; }
+
+    public Double getAmount() { return amount; }
+
+    public Instant getCreatedAt() { return createdAt; }
+
+    public boolean getSynced() { return synced; }
 }
 

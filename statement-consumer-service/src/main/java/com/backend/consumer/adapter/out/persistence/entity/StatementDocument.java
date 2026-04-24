@@ -10,11 +10,13 @@ public class StatementDocument {
 
     @Id
     private String id;
+
     private String from;
     private String to;
     private String description;
     private Double amount;
     private Instant createdAt;
+    private boolean synced;
 
     public StatementDocument() {}
 
@@ -36,6 +38,9 @@ public class StatementDocument {
 
     public Instant getCreatedAt() { return createdAt; }
     public void setCreatedAt(Instant createdAt) { this.createdAt = createdAt; }
+
+    public boolean getSynced() { return synced; }
+    public void setSynced(boolean synced) { this.synced = synced; }
 }
 
    

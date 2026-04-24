@@ -37,7 +37,8 @@ class StatementQueryControllerTest {
             "456",
             "Pagamento teste",
             100.0,
-            Instant.parse("2026-03-31T14:51:09Z")
+            Instant.parse("2026-03-31T14:51:09Z"),
+            true
         );
 
         StatementPage page = new StatementPage(
@@ -73,7 +74,8 @@ class StatementQueryControllerTest {
             "456",
             "Descrição",
             200.0,
-            Instant.now()
+            Instant.now(),
+            true
         );
 
         when(queryService.getStatementByPaymentId("payment-123"))

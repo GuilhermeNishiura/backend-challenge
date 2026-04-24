@@ -1,4 +1,4 @@
-package com.backend.query.application.port.out;
+package com.backend.query.adapter.out.port;
 
 import java.util.Optional;
 

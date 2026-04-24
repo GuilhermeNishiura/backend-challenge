@@ -2,6 +2,8 @@ package com.backend.query.application.query.model;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 public class StatementPage {
 
     private final List<StatementView> content;
@@ -19,6 +21,15 @@ public class StatementPage {
         this.totalElements = totalElements;
         this.totalPages = totalPages;
         this.last = last;
+    }
+
+    public static StatementPage fromSpringPage(Page<StatementView> page) {
+        return new StatementPage(
+            page.getContent(),
+            page.getTotalElements(),
+            page.getTotalPages(),
+            page.isLast()
+        );
     }
 
     public List<StatementView> getContent() {

@@ -1,5 +1,7 @@
 package com.backend.query.adapter.in.web.dto;
 
+import com.backend.query.domain.model.StatementEntity;
+import com.backend.query.domain.model.StatementMongo;
 import java.time.Instant;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -25,43 +27,64 @@ public class StatementResponse {
     @Schema(description = "Data de criação do extrato", example = "2026-03-31T14:51:09.088Z")
     private final Instant createdAt;
 
+    @Schema(description = "Representa sincronia entre bancos", example = "true")
+    private final boolean synced;
+
+    
     public StatementResponse(
             String id,
             String from,
             String to,
             String description,
-            Double amount,
-            Instant createdAt
-    ) {
+            double amount,
+            Instant createdAt,
+            boolean synced
+        ) {
+
         this.id = id;
         this.from = from;
         this.to = to;
         this.description = description;
         this.amount = amount;
         this.createdAt = createdAt;
+        this.synced = synced;
+    }
+    
+    public static StatementResponse fromMongo(StatementMongo mongo) {
+        return new StatementResponse(
+            mongo.getId(),
+            mongo.getFrom(),
+            mongo.getTo(),
+            mongo.getDescription(),
+            mongo.getAmount(),
+            mongo.getCreatedAt(),
+            mongo.getSynced()
+        );
     }
 
-    public String getId() {
-        return id;
+    public static StatementResponse fromEntity(StatementEntity entity) {
+        return new StatementResponse(
+            entity.getExternalId(),
+            entity.getFrom(),
+            entity.getTo(),
+            entity.getDescription(),
+            entity.getAmount(),
+            entity.getCreatedAt(),
+            entity.getSynced()
+        );
     }
 
-    public String getFrom() {
-        return from;
-    }
+    public String getId() { return id; }
 
-    public String getTo() {
-        return to;
-    }
+    public String getFrom() { return from; }
 
-    public String getDescription() {
-        return description;
-    }
+    public String getTo() { return to; }
 
-    public Double getAmount() {
-        return amount;
-    }
+    public String getDescription() { return description; }
 
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
+    public Double getAmount() { return amount; }
+
+    public Instant getCreatedAt() { return createdAt; }
+
+    public boolean getSynced() { return synced; }
 }

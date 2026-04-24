@@ -1,10 +1,9 @@
-package com.backend.query.adapter.out.persistence;
+package com.backend.query.adapter.in.port;
 
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -21,10 +20,10 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import com.backend.query.adapter.out.persistence.entity.StatementDocument;
 import com.backend.query.adapter.out.persistence.repository.StatementMongoRepository;
 import com.backend.query.application.query.model.StatementPage;
 import com.backend.query.application.query.model.StatementView;
+import com.backend.query.domain.model.StatementMongo;
 
 @ExtendWith(MockitoExtension.class)
 class MongoStatementQueryAdapterTest {
@@ -44,16 +43,17 @@ class MongoStatementQueryAdapterTest {
 
         String from = "123";
 
-        StatementDocument doc = new StatementDocument(
+        StatementMongo doc = new StatementMongo(
             "stmt-1",
             "123",
             "456",
-            "Test description",
             100.0,
-            Instant.now()
+            "Test description",
+            Instant.now(),
+            true
         );
 
-        Page<StatementDocument> page =
+        Page<StatementMongo> page =
             new PageImpl<>(
                 List.of(doc),
                 PageRequest.of(0, 10),
@@ -70,7 +70,7 @@ class MongoStatementQueryAdapterTest {
         assertEquals(1, result.getTotalElements());
         assertEquals(1, result.getTotalPages());
         assertTrue(result.isLast());
-        assertThat(result.getContent().size()).isEqualTo(1);
+        assertEquals(1, result.getContent().size());
 
         StatementView view = result.getContent().get(0);
 
@@ -86,13 +86,14 @@ class MongoStatementQueryAdapterTest {
 
         String paymentId = "payment-123";
 
-        StatementDocument doc = new StatementDocument(
+        StatementMongo doc = new StatementMongo(
             paymentId,
             "123",
             "456",
-            "Payment description",
             150.0,
-            Instant.now()
+            "Payment description",
+            Instant.now(),
+            true
         );
 
         when(repository.findById(paymentId))

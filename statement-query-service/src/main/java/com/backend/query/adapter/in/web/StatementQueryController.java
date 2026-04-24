@@ -164,7 +164,8 @@ public class StatementQueryController {
             view.getTo(),
             view.getDescription(),
             view.getAmount(),
-            view.getCreatedAt()
+            view.getCreatedAt(),
+            view.getSynced()
         );
     }
 }

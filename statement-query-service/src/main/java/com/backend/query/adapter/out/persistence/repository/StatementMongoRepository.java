@@ -4,12 +4,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.backend.query.adapter.out.persistence.entity.StatementDocument;
+import com.backend.query.domain.model.StatementMongo;
 
 public interface StatementMongoRepository
-        extends MongoRepository<StatementDocument, String> {
+        extends MongoRepository<StatementMongo, String> {
 
-    Page<StatementDocument> findByFrom(
+    Page<StatementMongo> findByFrom(
         String from,
         Pageable pageable
     );

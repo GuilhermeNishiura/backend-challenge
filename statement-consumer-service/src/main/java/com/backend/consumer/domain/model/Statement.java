@@ -10,6 +10,7 @@ public class Statement {
     private final String description;
     private final double amount;
     private final Instant createdAt;
+    private final boolean synced = false;
 
     public Statement(
             String id,

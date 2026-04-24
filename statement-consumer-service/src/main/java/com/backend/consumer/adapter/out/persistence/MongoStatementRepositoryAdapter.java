@@ -36,6 +36,7 @@ public class MongoStatementRepositoryAdapter
         d.setDescription(s.getDescription());
         d.setAmount(s.getAmount());
         d.setCreatedAt(s.getCreatedAt());
+        d.setSynced(false);
         return d;
     }
 }

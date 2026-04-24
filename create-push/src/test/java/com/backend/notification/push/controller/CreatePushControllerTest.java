@@ -29,6 +29,7 @@ class CreatePushControllerTest {
         request.setCustomerId("cust-1");
         request.setTitulo("Pagamento recebido");
         request.setMensagem("Seu pagamento foi processado.");
+        request.setDescription("Pagamento teste");
 
         mockMvc.perform(
                 post("/push")
@@ -49,9 +50,10 @@ class CreatePushControllerTest {
         request.setCustomerId("cust-1");
         request.setTitulo("Pagamento recebido");
         request.setMensagem("Seu pagamento foi processado.");
+        request.setDescription("E2E_FAIL");
 
         mockMvc.perform(
-                post("/push?fail=true")
+                post("/push")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(objectMapper.writeValueAsString(request))
         )

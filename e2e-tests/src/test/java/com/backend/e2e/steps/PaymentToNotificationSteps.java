@@ -54,16 +54,11 @@ public class PaymentToNotificationSteps {
             .statusCode(204);
     }
 
-    @When("o fluxo de notificaçoes é processado")
-    public void aguardaUpdate() throws InterruptedException {
-        Thread.sleep(Duration.ofSeconds(10).toMillis());
+    @When("o fluxo de notificaçoes é processado em {int} segundos")
+    public void aguardaProcesso(int intervalo) throws InterruptedException {
+        Thread.sleep(Duration.ofSeconds(intervalo).toMillis());
     }
-
-    @When("o retry de notificaçoes é executado")
-    public void aguardaRetry() throws InterruptedException {
-        Thread.sleep(Duration.ofSeconds(20).toMillis());
-    }
-
+    
     @Then("a notificaçao deve existir com status {string} e {int} tentativas")
     public void validarStatus(String status, int tentativas) {
         

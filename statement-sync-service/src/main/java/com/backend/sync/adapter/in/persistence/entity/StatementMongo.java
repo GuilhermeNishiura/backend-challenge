@@ -1,4 +1,4 @@
-package com.backend.query.domain.model;
+package com.backend.sync.adapter.in.persistence.entity;
 
 import java.time.Instant;
 
@@ -6,28 +6,28 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "statements")
-public class Statement {
+public class StatementMongo {
 
     @Id
     private String id;
 
     private String from;
     private String to;
-    private Double amount;
     private String description;
-    private String status;
-    private Instant completedAt;
+    private Double amount;
+    private Instant createdAt;
+    private boolean synced;
 
-    public Statement() {}
+    public StatementMongo() {}
 
-    public Statement(String paymentId, String from, String to, Double amount, String description, String status, Instant completedAt) {
+    public StatementMongo(String paymentId, String from, String to, String description, Double amount, Instant createdAt, boolean synced) {
         this.id = paymentId;
         this.from = from;
         this.to = to;
-        this.amount = amount;
         this.description = description;
-        this.status = status;
-        this.completedAt = completedAt;
+        this.amount = amount;
+        this.createdAt = createdAt;
+        this.synced = synced;
     }
 
     public String getId() { return id; }
@@ -40,8 +40,8 @@ public class Statement {
 
     public String getDescription() { return description; }
 
-    public String getStatus() { return status; }
+    public Instant getCreatedAt() { return createdAt; }
 
-    public Instant getCompletedAt() { return completedAt; }
-
+    public boolean isSynced() { return synced; }
+    public void setSynced(boolean synced) {this.synced = synced; }
 }

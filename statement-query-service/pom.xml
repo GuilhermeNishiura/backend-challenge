@@ -102,14 +102,19 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring</artifactId>
-            <version>2.5.6.SEC03</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 
@@ -141,10 +146,12 @@
                     <excludes>
                     <exclude>**/domain/model/**</exclude>
                     <exclude>**/adapter/out/persistence/entity/**</exclude>
-                    <exclude>**/adapter/in/web/dto/**</exclude>
+                    <exclude>**/adapter/out/configuration/**</exclude>
+                    <exclude>**/adapter/in/web/**</exclude>
                     <exclude>**/*Application*</exclude>
                     <exclude>**/application/query/model/**</exclude>
                     <exclude>**/config/SecurityConfig*</exclude>
+                    <exclude>**/adapter/in/config/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>

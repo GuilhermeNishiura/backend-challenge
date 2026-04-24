@@ -1,15 +1,15 @@
 package com.backend.query.application.query;
 
 import com.backend.query.adapter.in.web.dto.StatementNotFoundException;
-import com.backend.query.application.port.out.StatementQueryRepository;
+import com.backend.query.adapter.in.port.StatementQueryPort;
 import com.backend.query.application.query.model.StatementPage;
 import com.backend.query.application.query.model.StatementView;
 
 public class StatementQueryService {
 
-    private final StatementQueryRepository repository;
+    private final StatementQueryPort repository;
 
-    public StatementQueryService(StatementQueryRepository repository) {
+    public StatementQueryService(StatementQueryPort repository) {
         this.repository = repository;
     }
 

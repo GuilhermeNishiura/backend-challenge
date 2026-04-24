@@ -34,9 +34,8 @@ public class CreatePushController {
 
         // Simulação de falha controlada
         if (request.getDescription().contains("E2E_FAIL")){
-            if(shouldFail) {
-                shouldFail = !shouldFail;
-
+            shouldFail = !shouldFail;
+            if(!shouldFail) {
                 log.error("Simulando falha no envio do push");
                 return CreatePushResponse.error("Push provider unavailable");
             }
