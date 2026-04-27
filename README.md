@@ -57,6 +57,7 @@ Consulte [`docs/overview.md`](docs/overview.md)
 <li>Java 21</li>
 <li>Maven 3.9+</li>
 <li>MongoDB em localhost:27017</li>
+<li>PostgreSQL em localhost:5432</li>
 <li>Kafka</li>
 <li>ActiveMQ</li>
 </ul>
