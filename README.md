@@ -44,6 +44,7 @@ Consulte [`docs/overview.md`](docs/overview.md)
 <tr><td>notification-update</td><td>8085</td><td>Processamento de notificações PENDING</td></tr>
 <tr><td>notification-retry</td><td>8086</td><td>Reprocessamento de notificações ERROR</td></tr>
 <tr><td>create-push</td><td>8087</td><td>Simulação de provedor externo de push</td></tr>
+<tr><td>statement-sync-service</td><td>8088</td><td>Sincronização de banco MOngoDB e PostgreeSQL</td></tr>
 </tbody>
 </table>
 
@@ -99,6 +100,11 @@ mvn spring-boot:run
 
 ```bash
 cd create-push
+mvn spring-boot:run
+```
+
+```bash
+cd statement-sync-service
 mvn spring-boot:run
 ```
 
@@ -165,6 +171,7 @@ backend-challenge/
 ├── notification-update/
 ├── notification-retry/
 ├── create-push/
+├── statement-sync-service/
 ├── docs/
 │   └── overview.md
 └── e2e-tests/

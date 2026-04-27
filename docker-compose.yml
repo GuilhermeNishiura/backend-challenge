@@ -32,6 +32,23 @@ services:
     ports:
       - "61616:61616"   # JMS
       - "8161:8161"     # Web Console
+
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: payment_db
+      POSTGRES_USER: payment_user
+      POSTGRES_PASSWORD: payment_pass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U payment_user -d payment_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
   
   payment-service:
     build: ./payment-service
@@ -51,7 +68,10 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
     depends_on:
       - kafka
-      - mongodb
+      - mongodb:
+        condition: service_started
+      - postgres:
+        condition: service_healthy
 
   statement-query:
     build: ./statement-query-service
@@ -60,7 +80,10 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     depends_on:
-      - mongodb
+      - mongodb:
+        condition: service_started
+      - postgres:
+        condition: service_healthy
 
   notification-consumer:
     build: ./notification-consumer
@@ -103,6 +126,20 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
 
+  statement-sync:
+    build: ./statement-sync-service
+    container_name: statement-sync
+    ports:
+      - "8088:8088"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - mongodb:
+        condition: service_started
+      - postgres:
+        condition: service_healthy
+
 volumes:
   mongo_data:
   kafka_data:
+  postgres_data:

@@ -40,6 +40,9 @@ O sistema é composto pelos seguintes serviços:
   - Simula um provedor externo de push notification
   - Permite simulação de sucesso ou falha controlada
 
+- **statement-sync-service**
+  - Sincroniza o banco de dados relacional PostgreSQL baseado no banco MongoDB
+  - Evita reprocessamento infinito
 ---
 
 ## Fluxo Principal
@@ -48,9 +51,10 @@ O sistema é composto pelos seguintes serviços:
 2. Um evento é publicado (Kafka / ActiveMQ)
 FLUXO KAFKA
 3. O **statement-consumer-service** publica a transação no banco MongoDB
-4. O **statement-query-service** busca pelas transações salvas no banco
+3. O **statement-sync-service** copia os dados do MongoDB e publica no PostgreSQL
+5. O **statement-query-service** busca pelas transações salvas no banco, podendo acessar tanto Mongo quanto Postgre
 FLUXO ACTIVEMQ
-3. O **notification-consumer** cria uma notificação `PENDING`
+3. O **notification-consumer** cria uma notificação `PENDING` no banco MongoDB
 4. O **notification-update** tenta enviar o push
 5. Em caso de falha, a notificação vai para `ERROR`
 6. O **notification-retry** tenta reenviar até o limite configurado
@@ -63,7 +67,7 @@ FLUXO ACTIVEMQ
 - Java + Spring Boot
 - Kafka (eventos de pagamento)
 - ActiveMQ (eventos de notificação)
-- MongoDB (persistência)
+- MongoDB + PostgreSQL (persistência)
 - Spring Scheduler (processamento assíncrono)
 - JUnit 5 + Mockito (testes)
 - JaCoCo (coverage)
@@ -80,7 +84,7 @@ O projeto adota uma abordagem de testes em camadas:
   - Mockito puro, sem dependências externas
 
 - **Testes de comportamento**
-  - BDD com Cucumber no `payment-service`
+  - BDD com Cucumber no `payment-service`, `statement-query-service` e `statement-sync-service`
 
 - **Logs em testes**
   - Controlados via `logback-test.xml` para evitar ruído
@@ -92,4 +96,4 @@ O projeto adota uma abordagem de testes em camadas:
 - Cada serviço utiliza uma porta dedicada
 - Profiles permitem execução local sem Docker
 - Scripts `.bat` facilitam a inicialização do ambiente
-- Dependências externas (Kafka, ActiveMQ, Mongo) devem estar disponíveis localmente
+- Dependências externas (Kafka, ActiveMQ, Mongo e PostgreSQL) devem estar disponíveis localmente

@@ -30,6 +30,9 @@ start "create-push" cmd /k cd create-push && mvn spring-boot:run -Dspring-boot.r
 REM Statement Query
 start "statement-query" cmd /k cd statement-query-service && mvn spring-boot:run -Dspring-boot.run.profiles=prod
 
+REM Statement Sync
+start "statement-sync" cmd /k cd statement-sync-service && mvn spring-boot:run -Dspring-boot.run.profiles=prod
+
 echo ==========================================
 echo Todos os servicos foram iniciados
 echo ==========================================
